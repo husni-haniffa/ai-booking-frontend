@@ -21,7 +21,7 @@ const routes = createBrowserRouter([
             element: <Home />,
           },
           {
-            path: "/:id",
+            path: "/:_id",
             element: <Hotel />,
           },
         ],

@@ -1,56 +1,26 @@
 import HotelCard from "@/components/shared/hotel-card";
 import Marketing from "./marketing";
 import { Label } from "@radix-ui/react-label";
+import { fetchHotels } from "@/lib/features/hotelSlice";
 
-const hotels = [
-  {
-    id: 1,
-    hotel: "Hotel Name",
-    image:
-      "https://th.bing.com/th/id/OIP.Zis2cXdglxbZemS3QNsdZQHaE8?rs=1&pid=ImgDetMain",
-    rating: "rating",
-    location: "defe",
-    price: "re",
-  },
-  {
-    id: 3,
-    hotel: "Hotel Name",
-    image:
-      "https://th.bing.com/th/id/OIP.Zis2cXdglxbZemS3QNsdZQHaE8?rs=1&pid=ImgDetMain",
-    rating: "rating",
-    location: "defe",
-    price: "re",
-  },
-  {
-    id: 2,
-    hotel: "Hotel Name",
-    image:
-      "https://th.bing.com/th/id/OIP.Zis2cXdglxbZemS3QNsdZQHaE8?rs=1&pid=ImgDetMain",
-    rating: "rating",
-    location: "defe",
-    price: "re",
-  },
-  {
-    id: 4,
-    hotel: "Hotel Name",
-    image:
-      "https://th.bing.com/th/id/OIP.Zis2cXdglxbZemS3QNsdZQHaE8?rs=1&pid=ImgDetMain",
-    rating: "rating",
-    location: "defe",
-    price: "re",
-  },
-  {
-    id: 6,
-    hotel: "Hotel Name",
-    image:
-      "https://th.bing.com/th/id/OIP.Zis2cXdglxbZemS3QNsdZQHaE8?rs=1&pid=ImgDetMain",
-    rating: "rating",
-    location: "defe",
-    price: "re",
-  },
-];
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+
+
+ 
 
 const Home: React.FC = () => {
+  
+  const dispatch = useDispatch();
+    const { hotels, loading, error } = useSelector((state: { hotel: { hotels: any[]; loading: boolean; error: string | null; } }) => state.hotel);
+
+    useEffect(() => {
+        dispatch<any>(fetchHotels());
+    }, [dispatch]);
+
+    if (loading) return <p>Loading hotels...</p>;
+    if (error) return <p>Error: {error}</p>;
   return (
     <div className="space-y-12">
       <div>
@@ -59,9 +29,10 @@ const Home: React.FC = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {hotels.map((hotel) => (
+          console.log(hotel.id),
           <HotelCard
-            key={hotel.id}
-            id={hotel.id}
+            key={hotel._id}
+            id={hotel._id}
             hotelName={hotel.hotel}
             image={hotel.image}
             rating={hotel.rating}

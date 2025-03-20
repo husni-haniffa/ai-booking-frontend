@@ -11,68 +11,35 @@ import {
 import { BookingForm } from "./booking-form";
 import { Wifi, Tv, Utensils, Coffee, Star, MapPin } from "lucide-react";
 import { Label } from "@/components/ui/label";
+import { fetchHotel } from "@/lib/features/hotelSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 
-const hotels = [
-  {
-    id: 6,
-    hotel: "Hotel Name",
-    image:
-      "https://th.bing.com/th/id/OIP.Zis2cXdglxbZemS3QNsdZQHaE8?rs=1&pid=ImgDetMain",
-    rating: "rating",
-    location: "defe",
-    price: "re",
-  },
-  {
-    id: 3,
-    hotel: "Hotel Name",
-    image:
-      "https://th.bing.com/th/id/OIP.Zis2cXdglxbZemS3QNsdZQHaE8?rs=1&pid=ImgDetMain",
-    rating: "rating",
-    location: "defe",
-    price: "re",
-  },
-  {
-    id: 2,
-    hotel: "Hotel Name",
-    image:
-      "https://th.bing.com/th/id/OIP.Zis2cXdglxbZemS3QNsdZQHaE8?rs=1&pid=ImgDetMain",
-    rating: "rating",
-    location: "defe",
-    price: "re",
-  },
-  {
-    id: 4,
-    hotel: "Hotel Name",
-    image:
-      "https://th.bing.com/th/id/OIP.Zis2cXdglxbZemS3QNsdZQHaE8?rs=1&pid=ImgDetMain",
-    rating: "rating",
-    location: "defe",
-    price: "re",
-  },
-  {
-    id: 1,
-    hotel: "Hotel Name",
-    image:
-      "https://th.bing.com/th/id/OIP.Zis2cXdglxbZemS3QNsdZQHaE8?rs=1&pid=ImgDetMain",
-    rating: "rating",
-    location: "defe",
-    price: "re",
-  },
-];
+
 
 const Hotel: React.FC = () => {
-    const {id} = useParams();
-    const hotel = hotels.find((hotel) => hotel.id === parseInt(id!));
-    if (!hotel) {
-      return <div>Hotel not found</div>;
+   const dispatch = useDispatch();
+const { hotel: selectedHotel, loading, error } = useSelector(
+    (state: { hotel: { hotel: any; loading: boolean; error: string | null; } }) => state.hotel
+);
+const { _id } = useParams();
+
+useEffect(() => {
+    if (_id) {
+        dispatch<any>(fetchHotel(_id));
     }
+}, [dispatch, _id]);
+
+if (loading) return <p>Loading hotel...</p>;
+if (error) return <p>Error: {error}</p>;
+if (!selectedHotel) return <div>Hotel not found</div>;
     return (
       <div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <img
-              src={heroBackground}
+              src={selectedHotel.image}
               alt=""
               className="rounded-3xl min-h-[300px]"
             />
@@ -81,7 +48,7 @@ const Hotel: React.FC = () => {
             {/* first component */}
             <Card className="border-none shadow-md">
               <CardHeader>
-                <CardTitle className="mb-2">Hotel Name</CardTitle>
+                <CardTitle className="mb-2">{selectedHotel.name}</CardTitle>
                 <div className="space-y-2">
                   <div className="flex space-x-1 ">
                     <span>
