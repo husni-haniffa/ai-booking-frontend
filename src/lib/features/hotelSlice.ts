@@ -1,5 +1,5 @@
 
-import { IHotelState } from "@/types/hotel";
+import { IHotel, IHotelState } from "@/types/hotel";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState: IHotelState = {
@@ -20,6 +20,25 @@ export const fetchHotel = createAsyncThunk("hotel/fetchHotel", async (id: string
     if (!response.ok) throw new Error("Failed to fetch hotel");
     return await response.json();
 });
+
+export const createHotel = createAsyncThunk(
+    "hotel/createHotel",
+    async (hotelData: IHotel, { rejectWithValue }) => {
+        try {
+            const response = await fetch("http://localhost:3000/api/hotels", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(hotelData),
+            });
+            if (!response.ok) throw new Error("Failed to create hotel");
+            return await response.json();
+        } catch (error: any) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
 
 
 
@@ -67,6 +86,19 @@ const hotelSlice = createSlice({
             .addCase(fetchHotel.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || "Something went wrong";
+            });
+        builder
+            .addCase(createHotel.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(createHotel.fulfilled, (state, action) => {
+                state.hotels.push(action.payload); // Add the new hotel to the state
+                state.loading = false;
+            })
+            .addCase(createHotel.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
             });
     },
 });
