@@ -6,3 +6,8 @@ export const CheckRole = (role: Roles): boolean => {
     console.log(user?.publicMetadata?.role);
     return user?.publicMetadata?.role === role;
 };
+
+export const useCurrentUser = () => {
+    const { user } = useUser();
+    return user;
+};

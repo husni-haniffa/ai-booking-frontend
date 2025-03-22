@@ -19,12 +19,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { createHotel } from "@/lib/features/hotelSlice";
 import Toast from "@/lib/toast";
 import { AppDispatch } from "@/lib/store";
+import { useAuth } from "@clerk/clerk-react";
 
 
 
 export function ProfileForm() {
 const dispatch = useDispatch<AppDispatch>();
-
+  const { getToken } = useAuth();
 const formSchema = z.object({
   name: z.string().regex(/^[a-zA-Z\s]+$/, "Name can only contain letters and spaces."),
   image: z.string().url({ message: "Enter a valid image URL." }),
@@ -48,8 +49,12 @@ const form = useForm({
 const hotelState = useSelector((state: any) => state.hotel);
 
 const onSubmit = async (values: z.infer<typeof formSchema>) => {
+   const token = await getToken(); 
   try {
-    const resultAction = dispatch(createHotel({ ...values}));
+  const resultAction = await dispatch(createHotel({ 
+    hotelData: values, // ✅ Correct: `values` is passed as `hotelData`
+    token: token as string,
+}));
 
     if (createHotel.fulfilled.match(resultAction)) {
       Toast.success("Hotel created successfully! ✅");

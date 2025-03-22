@@ -9,8 +9,13 @@ const initialState: IHotelState = {
     error: null,
 };
 
-export const fetchHotels = createAsyncThunk("hotel/fetchHotels", async () => {
-    const response = await fetch("http://localhost:3000/api/hotels");
+export const fetchHotels = createAsyncThunk("hotel/fetchHotels", async ({token} : {token: string}) => {
+    const response = await fetch("http://localhost:3000/api/hotels",
+        {headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }}
+    );
     if (!response.ok) throw new Error("Failed to fetch hotels");
     return await response.json();
 });
@@ -23,19 +28,21 @@ export const fetchHotel = createAsyncThunk("hotel/fetchHotel", async (id: string
 
 export const createHotel = createAsyncThunk(
     "hotel/createHotel",
-    async (hotelData: IHotel, { rejectWithValue }) => {
+    async ({hotelData, token} : {hotelData: IHotel, token: string}) => {
+        
         try {
             const response = await fetch("http://localhost:3000/api/hotels", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify(hotelData),
             });
             if (!response.ok) throw new Error("Failed to create hotel");
             return await response.json();
         } catch (error: any) {
-            return rejectWithValue(error.message);
+            return error.message;
         }
     }
 );
