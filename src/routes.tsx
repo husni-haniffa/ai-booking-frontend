@@ -7,6 +7,8 @@ import DemoPage from "./pages/admin/hotels";
 import { ProfileForm } from "./pages/admin/create-hotel-form";
 import Dashboard from "./pages/admin/dashboard";
 import Hotel from "./pages/hotel";
+import SignInPage from "./auth/sign-in";
+import SignUpPage from "./auth/sign-up";
 
 
 const routes = createBrowserRouter([
@@ -21,7 +23,7 @@ const routes = createBrowserRouter([
             element: <Home />,
           },
           {
-            path: "/:id",
+            path: "/:_id",
             element: <Hotel />,
           },
         ],
@@ -49,6 +51,14 @@ const routes = createBrowserRouter([
       },
     ],
   },
+  {
+        path: "/sign-in",
+        element: <SignInPage />
+      },
+      {
+        path: "/sign-up",
+        element: <SignUpPage />
+      }
 ]);
 
 export default routes;
