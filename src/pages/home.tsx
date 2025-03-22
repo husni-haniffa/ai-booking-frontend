@@ -5,6 +5,7 @@ import { fetchHotels } from "@/lib/features/hotelSlice";
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useAuth } from "@clerk/clerk-react";
 
 
 
@@ -12,12 +13,18 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Home: React.FC = () => {
   
-  const dispatch = useDispatch();
-    const { hotels, loading, error } = useSelector((state: { hotel: { hotels: any[]; loading: boolean; error: string | null; } }) => state.hotel);
+const { getToken } = useAuth();
+const dispatch = useDispatch();
+const { hotels, loading, error } = useSelector((state: { hotel: { hotels: any[]; loading: boolean; error: string | null; } }) => state.hotel);
 
-    useEffect(() => {
-        dispatch<any>(fetchHotels());
-    }, [dispatch]);
+useEffect(() => {
+  const fetchTokenAndHotels = async () => {
+    const token = await getToken();
+    dispatch<any>(fetchHotels({ token: token as string }));
+  };
+
+  fetchTokenAndHotels();
+}, [dispatch]);
 
     if (loading) return <p>Loading hotels...</p>;
     if (error) return <p>Error: {error}</p>;
