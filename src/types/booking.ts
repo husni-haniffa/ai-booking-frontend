@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export interface IBooking {
+    _id: string;
     hotelId: string;
     userId: string;
     customerName: string;
@@ -12,15 +13,8 @@ export interface IBooking {
     checkIn: Date;
     checkOut: Date;
     bookingStatus?: string;
-
 }
 
-export interface IBookingState {
-    booking: IBooking | null;
-    bookings: IBooking[];
-    loading: boolean;
-    error: string | null;
-}
 
 export const bookingSchema = z.object({
     hotelId: z.string(),
@@ -33,9 +27,10 @@ export const bookingSchema = z.object({
         children: z.number().min(0, "Children can be 0 or more."),
     }),
     checkIn: z.date({ required_error: "Check-in date is required." }),
-    checkOut: z.date({ required_error: "Check-out date is required." })}).
-        refine(data => data.checkOut > data.checkIn, {
+    checkOut: z.date({ required_error: "Check-out date is required." })
+}).
+    refine(data => data.checkOut > data.checkIn, {
         message: "Check-out date must be after check-in date.",
         path: ["checkOut"],
-});
+    });
 

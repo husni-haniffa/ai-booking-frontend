@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
-import heroBackground from "@/assets/hero-background.jpg";
 
+import heroBackground from "@/assets/hero-background.jpg"
 import { Label } from "@/components/ui/label";
 
 const Marketing: React.FC = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 rounded-3xl">
+    <section className="px-8 py-8 lg:py-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 rounded-3xl">
       <div className="space-y-6 rounded-3xl">
         <div
           className="rounded-3xl h-[300px] p-8 flex flex-col justify-between bg-no-repeat bg-center bg-cover"
@@ -52,6 +53,8 @@ const Marketing: React.FC = () => {
         </div>
       </div>
     </div>
+    </section>
+    
   );
 };
 

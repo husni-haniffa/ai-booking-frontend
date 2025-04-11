@@ -1,12 +1,11 @@
-import { ThemeProvider } from "@/components/ui/theme-provider";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom"
 
-const RootLayout: React.FC = () => {
+const RootLayout = () => {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    <main>
       <Outlet />
-    </ThemeProvider>
-  );
-};
+    </main>
+  )
+}
 
-export default RootLayout;
+export default RootLayout
