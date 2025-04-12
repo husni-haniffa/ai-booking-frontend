@@ -1,23 +1,17 @@
-import Footer from "@/components/shared/footer";
-import Navbar from "@/components/shared/navbar";
-import Hero from "@/pages/hero";
-import { Toaster } from "react-hot-toast";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom"
+import { Toaster } from "react-hot-toast"
+import Navbar from "@/components/shared/navbar"
+import Footer from "@/components/shared/footer"
 
-const MainLayout: React.FC = () => {
-  const location = useLocation();
-
+export function MainLayout() {
   return (
     <div>
       <Navbar />
-      {location.pathname === "/" && <Hero />}
-      <div className="container py-8 min-h-screen">
-        <Toaster />
+      <main>
         <Outlet />
-      </div>
+      </main>
       <Footer />
+      <Toaster position="top-right" />
     </div>
-  );
-};
-
-export default MainLayout;
+  )
+}

@@ -1,52 +1,32 @@
-import HotelCard from "@/components/shared/hotel-card";
-import Marketing from "./marketing";
-import { Label } from "@radix-ui/react-label";
-import { fetchHotels } from "@/lib/features/hotelSlice";
-
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useAuth } from "@clerk/clerk-react";
-
-
-
- 
+import Marketing from "../components/ui-components/explore-content";
+import HotelListings from "@/components/ui-components/hotel-listings";
+import HeroSection from "@/components/ui-components/hero-section";
+import { useLocation } from "react-router-dom";
+import { IHotel } from "@/types/hotel";
+import { useState, useEffect } from "react";
 
 const Home: React.FC = () => {
-  
-const { getToken } = useAuth();
-const dispatch = useDispatch();
-const { hotels, loading, error } = useSelector((state: { hotel: { hotels: any[]; loading: boolean; error: string | null; } }) => state.hotel);
+  const location = useLocation();
+  const [searchResults, setSearchResults] = useState<Array<{ hotel: IHotel; confidence: number }> | undefined>();
 
-useEffect(() => {
-  const fetchTokenAndHotels = async () => {
-    const token = await getToken();
-    dispatch<any>(fetchHotels({ token: token as string }));
+  useEffect(() => {
+    if (location.state?.searchResults) {
+      setSearchResults(location.state.searchResults);
+    }
+  }, [location.state]);
+
+  const handleClearSearch = () => {
+    setSearchResults(undefined);
   };
 
-  fetchTokenAndHotels();
-}, [dispatch]);
-
-    if (loading) return <p>Loading hotels...</p>;
-    if (error) return <p>Error: {error}</p>;
   return (
-    <div className="space-y-12">
+    <div>
       <div>
-        <Label className="text-4xl">Top trending hotels worldwide</Label><br/>
-        <Label className="mt-4">Discover the most luxuries hotels worldwide for an unforgettable experience</Label>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {hotels.map((hotel) => (
-          console.log(hotel.id),
-          <HotelCard
-            key={hotel._id}
-            id={hotel._id}
-            hotelName={hotel.hotel}
-            image={hotel.image}
-            rating={hotel.rating}
-            location={hotel.location}
-            price={hotel.price}
-          />
-        ))}
+        <HeroSection />
+        <HotelListings 
+          searchResults={searchResults}
+          onClearSearch={handleClearSearch}
+        />
       </div>
       <div>
         <Marketing />

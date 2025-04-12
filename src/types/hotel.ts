@@ -1,5 +1,5 @@
 export interface IHotel {
-    id?: number;
+    _id?: number;
     name: string;
     location: string;
     rating?: number;
@@ -9,9 +9,3 @@ export interface IHotel {
     description: string;
 }
 
-export interface IHotelState {
-    hotel: IHotel | null;
-    hotels: IHotel[];
-    loading: boolean;
-    error: string | null;
-}
