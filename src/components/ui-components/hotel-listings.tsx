@@ -3,6 +3,7 @@ import HotelCard from "./hotel-card";
 import { useState } from "react";
 import { IHotel } from "@/types/hotel";
 import { Loader2 } from "lucide-react";
+import HotelListingHeader from "./hotel-listing-header";
 
 interface HotelListingsProps {
   searchResults?: Array<{ hotel: IHotel; confidence: number }>;
@@ -72,7 +73,7 @@ const HotelListings: React.FC<HotelListingsProps> = ({ searchResults, onClearSea
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Filter by Location</h2>
+        <HotelListingHeader/>
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => handleLocationClick("")}
