@@ -6,6 +6,7 @@ export interface IBooking {
     userId: string;
     customerName: string;
     customerPhone: string;
+    noOfRooms: number;
     guests: {
         adults: number;
         children: number;

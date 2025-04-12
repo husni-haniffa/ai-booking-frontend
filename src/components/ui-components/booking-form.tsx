@@ -29,11 +29,11 @@ export function BookingFormDialog({ hotelId }: BookingFormDialogProps) {
     const [date, setDate] = useState<DateRange | undefined>();
     const [formData, setFormData] = useState({
         name: "",
-        email: "",
+        noOfRooms: "",
         phone: "",
-        rooms: "1",
-        adults: "1",
-        children: "0"
+        rooms: "",
+        adults: "",
+        children: ""
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +57,7 @@ export function BookingFormDialog({ hotelId }: BookingFormDialogProps) {
             return;
         }
 
-        if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim()) {
+        if (!formData.name.trim() || !formData.noOfRooms.trim() || !formData.phone.trim()) {
             Toast.error("Please fill in all required fields");
             return;
         }
@@ -68,6 +68,7 @@ export function BookingFormDialog({ hotelId }: BookingFormDialogProps) {
                 userId,
                 customerName: formData.name,
                 customerPhone: formData.phone,
+                noOfRooms: parseInt(formData.noOfRooms),
                 guests: {
                     adults: parseInt(formData.adults),
                     children: parseInt(formData.children)
@@ -78,6 +79,7 @@ export function BookingFormDialog({ hotelId }: BookingFormDialogProps) {
             }).unwrap();
             
             Toast.success("Booking created successfully!");
+            
         } catch (error) {
             Toast.error("Failed to create booking");
         }
@@ -123,14 +125,14 @@ export function BookingFormDialog({ hotelId }: BookingFormDialogProps) {
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
+                        <Label htmlFor="numberOfRooms">Rooms</Label>
                         <Input
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={formData.email}
+                            id="numberOfRooms"
+                            name="noOfRooms"
+                            type="number"
+                            value={formData.noOfRooms}
                             onChange={handleInputChange}
-                            placeholder="Enter your email"
+                            placeholder="Enter no of rooms"
                             required
                         />
                     </div>
