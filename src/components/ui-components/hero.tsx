@@ -39,7 +39,7 @@ const Hero: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Describe your destination, experience, or hotel..."
-            className="flex-grow bg-transparent lg:text-lg text-white placeholder:text-white/50 border-none outline-none focus:border-none focus:outline-none focus-visible:ring-0"
+            className="flex-grow  bg-transparent lg:text-lg  text-white placeholder:text-white/50 border-none outline-none ring-0 ring-offset-0 focus:border-none focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:border-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
           />
           <Button
             type="submit"
