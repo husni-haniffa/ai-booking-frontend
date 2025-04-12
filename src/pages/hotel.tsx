@@ -1,117 +1,116 @@
-import heroBackground from "@/assets/hero-background.jpg";
 import { useParams } from "react-router-dom";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
-import { BookingForm } from "./booking-form";
-import { Wifi, Tv, Utensils, Coffee, Star, MapPin } from "lucide-react";
-import { Label } from "@/components/ui/label";
-import { fetchHotel } from "@/lib/features/hotelSlice";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Wifi, Tv, Coffee, Star, MapPin, Utensils } from "lucide-react";
+import { useGetHotelByIdQuery } from "@/services/hotel-api";
+
+import { BookingFormDialog } from "@/components/ui-components/booking-form";
 
 
 
 
-const Hotel: React.FC = () => {
-   const dispatch = useDispatch();
-const { hotel: selectedHotel, loading, error } = useSelector(
-    (state: { hotel: { hotel: any; loading: boolean; error: string | null; } }) => state.hotel
-);
+
+
+const Hotel: React.FC = () => { 
+
 const { _id } = useParams();
 
-useEffect(() => {
-    if (_id) {
-        dispatch<any>(fetchHotel(_id));
-    }
-}, [dispatch, _id]);
+const {data: hotel, isLoading, isError, error } = useGetHotelByIdQuery(_id!);
 
-if (loading) return <p>Loading hotel...</p>;
-if (error) return <p>Error: {error}</p>;
-if (!selectedHotel) return <div>Hotel not found</div>;
+        if (isLoading) {
+        return (
+            <p>Loading</p>
+        )
+        
+    }
+
+    if (isError) {
+        return (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-4">
+                <p className="text-red-500">
+                    {error && 'data' in error 
+                        ? (error.data as string) 
+                        : 'error' in error 
+                        ? error.error 
+                        : "An error occurred"}
+                </p>
+            </div>
+        )
+    }
     return (
-      <div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
+      <div className="container mx-auto px-4 py-8 min-h-screen">
+      <div className="grid md:grid-cols-2 gap-8">
+        <div className="space-y-4">
+          <div className="relative w-full h-[400px]">
             <img
-              src={selectedHotel.image}
-              alt=""
-              className="rounded-3xl min-h-[300px]"
+              src={hotel?.image}
+              alt={hotel?.name}
+              className="absolute object-cover rounded-lg"
             />
           </div>
-          <div className="space-y-2">
-            {/* first component */}
-            <Card className="border-none shadow-md">
-              <CardHeader>
-                <CardTitle className="mb-2">{selectedHotel.name}</CardTitle>
-                <div className="space-y-2">
-                  <div className="flex space-x-1 ">
-                    <span>
-                      <MapPin size={16} />
-                    </span>
-                    <Label>Tokyo, Japan</Label>
-                  </div>
-
-                  <div className="flex space-x-1">
-                    <span>
-                      <Star size={16} />
-                    </span>
-                    <Label>
-                      <b>4.6</b>(100) reviws
-                    </Label>
-                  </div>
+          <div className="flex space-x-2">
+            <span className="badge-secondary">Rooftop View</span>
+            <span className="badge-secondary">French Cuisine</span>
+            <span className="badge-secondary">City Center</span>
+          </div>
+        </div>
+        <div className="space-y-6">
+          <div className="flex justify-between items-start">
+            <div>
+              <h1 className="text-3xl font-bold">{hotel?.name}</h1>
+              <div className="flex items-center mt-2">
+                <MapPin className="h-5 w-5 text-muted-foreground mr-1" />
+                <p className="text-muted-foreground">{hotel?.location}</p>
+              </div>
+            </div>
+            <button className="btn-outline btn-icon">
+              <Star className="h-4 w-4" />
+              <span className="sr-only">Add to favorites</span>
+            </button>
+          </div>
+          <div className="flex items-center space-x-1">
+            <Star className="h-5 w-5 fill-primary text-primary" />
+            <span className="font-bold">{hotel?.rating}</span>
+            <span className="text-muted-foreground">
+              ({hotel?.reviews?.toLocaleString() ?? 0} reviews)
+            </span>
+          </div>
+          <p className="text-muted-foreground">{hotel?.description}</p>
+          <Card>
+            <CardContent className="p-4">
+              <h2 className="text-xl font-semibold mb-4">Amenities</h2>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center">
+                  <Wifi className="h-5 w-5 mr-2" />
+                  <span>Free Wi-Fi</span>
                 </div>
-
-                <CardDescription>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Rerum ut exercitationem autem odit. Porro voluptatum ut
-                  perferendis quidem quis corporis, amet, repudiandae eius,
-                  rerum illum eligendi veniam illo hic error!
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            {/* second component */}
-            <Card className="border-none shadow-md rounded-2xl">
-              <CardHeader>
-                <CardTitle>Amnities</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 space-y-2">
-                  <div className="flex space-x-1">
-                    <Wifi size={16} />
-                    <CardDescription>Free Wi-Fi</CardDescription>
-                  </div>
-                  <div className="flex space-x-1">
-                    <Tv size={16} />
-                    <CardDescription>TV</CardDescription>
-                  </div>
-                  <div className="flex space-x-1">
-                    <Utensils size={16} />
-                    <CardDescription>Dining</CardDescription>
-                  </div>
-                  <div className="flex space-x-1">
-                    <Coffee size={16} />
-                    <CardDescription>Beverages</CardDescription>
-                  </div>
+                <div className="flex items-center">
+                  <Utensils className="h-5 w-5 mr-2" />
+                  <span>Restaurant</span>
                 </div>
-              </CardContent>
-              <CardFooter className="block space-y-6">
-                <div className="flex space-x-2">
-                  <span>100 USD</span>
-                  <Label>Per Night</Label>
+                <div className="flex items-center">
+                  <Tv className="h-5 w-5 mr-2" />
+                  <span>Flat-screen TV</span>
                 </div>
-
-                <BookingForm />
-              </CardFooter>
-            </Card>
+                <div className="flex items-center">
+                  <Coffee className="h-5 w-5 mr-2" />
+                  <span>Coffee maker</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-2xl font-bold">${hotel?.price}</p>
+              <p className="text-sm text-muted-foreground">per night</p>
+            </div>
+            <BookingFormDialog hotelId={String(hotel?._id)} />
           </div>
         </div>
       </div>
+    </div>
     );
 }
 
