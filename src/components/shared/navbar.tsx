@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { ModeToggle } from "../ui/mode-toggle";
-import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
-import { useState, useEffect } from "react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { Button } from "../ui/button";
-import { CheckRole } from "@/utils/roles";
+import { checkRole } from "@/auth/roles";
+
 
 const Navbar: React.FC = () => {
  
-  const isAdmin = CheckRole("admin");
+  const isAdmin = checkRole("admin")
 
   return (
     <nav className="flex justify-between p-4">

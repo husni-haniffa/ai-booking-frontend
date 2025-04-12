@@ -1,12 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import hotelReducer from "@/lib/features/hotelSlice";
-import bookingReducer from "@/lib/features/bookingSlice";
+
+import { hotelAPI } from "@/services/hotel-api";
+import { bookingAPI } from "@/services/booking-api";
 
 const store = configureStore({
     reducer: {
-        hotel: hotelReducer,
-        booking: bookingReducer,
+        [hotelAPI.reducerPath]: hotelAPI.reducer,
+        [bookingAPI.reducerPath]: bookingAPI.reducer,
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(hotelAPI.middleware, bookingAPI.middleware),
+   
 });
 
 export type RootState = ReturnType<typeof store.getState>;
