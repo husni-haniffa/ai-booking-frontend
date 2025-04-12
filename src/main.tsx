@@ -7,15 +7,15 @@ import store from "./lib/store";
 import { Provider } from "react-redux"
 import { ClerkProvider } from '@clerk/clerk-react'
 // Import your Publishable Key
-const CLERK_PUBLISHABLE_KEY = process.env.CLERK_PUBLISHABLE_KEY;
+const PUBLISHABLE_KEY = process.env.CLERK_PUBLISHABLE_KEY;
 
-if (!CLERK_PUBLISHABLE_KEY) {
+if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
 }
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY} afterSignOutUrl="/">
+     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
         <Provider store={store}>
           <RouterProvider router={router} />
         </Provider>
