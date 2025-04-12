@@ -10,19 +10,15 @@ import { Button } from "@/components/ui/button"
 import { Edit, Trash2 } from "lucide-react"
 import { useGetHotelsQuery } from "@/services/hotel-api";
 
-const dummyHotels = [
-  {
-    _id: "1",
-    name: "Grand Hotel",
-    location: "New York",
-    price: 299,
-    rating: 4.5,
-    image: "https://example.com/hotel1.jpg"
-  }
-]
-
 export function HotelTable() {
-  const { data: hotels, isLoading, isError, error } = useGetHotelsQuery();
+  const { data: hotels, isLoading, isError } = useGetHotelsQuery();
+ if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (isError) {
+    return <div>Error loading bookings</div>
+  }
 
   return (
     <div className="rounded-md border">
