@@ -1,7 +1,7 @@
 import { IBooking } from "@/types/booking";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const server = "https://ai-booking-backend.vercel.app.com";
+const server = "https://ai-booking-backend.vercel.app";
 
 export const bookingAPI = createApi({
     reducerPath: "bookingApi",
