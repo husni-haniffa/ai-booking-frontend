@@ -4,10 +4,11 @@ import { Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useSearchHotelsMutation } from "@/services/hotel-api";
 import { useNavigate } from "react-router-dom";
+import ButtonLoading from "../ui/button-loading";
 
 const Hero: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchHotels] = useSearchHotelsMutation();
+  const [searchHotels, {isLoading}] = useSearchHotelsMutation();
   const navigate = useNavigate();
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -41,7 +42,10 @@ const Hero: React.FC = () => {
             placeholder="Describe your destination, experience, or hotel..."
             className="flex-grow  bg-transparent lg:text-lg  text-white placeholder:text-white/50 border-none outline-none ring-0 ring-offset-0 focus:border-none focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:border-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
           />
-          <Button
+          {isLoading ? (
+            <ButtonLoading children="Searching" className="rounded-full w-48 flex items-center gap-x-2 lg:h-12"/>
+          ): (
+            <Button
             type="submit"
             className="rounded-full w-48 flex items-center gap-x-2 lg:h-12"
           >
@@ -51,6 +55,9 @@ const Hero: React.FC = () => {
             />
             <span className="lg:text-lg">AI Search</span>
           </Button>
+          )
+          } 
+          
         </form>
       </div>
     </div>
