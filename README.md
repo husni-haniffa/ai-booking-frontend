@@ -46,4 +46,4 @@ npm run dev
 
 ## API Integration
 This frontend connects to the Le Luxe backend API. Make sure to set up the backend server as well:
-[Le Luxe Backend Repository](https://github.com/Husnixix/ai-shortlisting-backend.git)
+[Le Luxe Backend Repository](https://github.com/Husnixix/ai-booking-backend.git)
