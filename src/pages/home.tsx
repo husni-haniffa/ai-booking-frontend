@@ -1,4 +1,4 @@
-import Marketing from "../components/ui-components/explore-content";
+import ExploreContent from "../components/ui-components/explore-content";
 import HotelListings from "@/components/ui-components/hotel-listings";
 import HeroSection from "@/components/ui-components/hero-section";
 import { useLocation } from "react-router-dom";
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
         />
       </div>
       <div>
-        <Marketing />
+        <ExploreContent />
       </div>
     </div>
   );
