@@ -1,50 +1,49 @@
-# React + TypeScript + Vite
+# Le Luxe - AI Booking System Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+Le Luxe is an AI-powered hotel booking system featuring natural language search capabilities using RAG (Retrieval-Augmented Generation) concepts. Users can search for hotels using natural language queries like "I want hotels in Italy with a rooftop" and get relevant filtered results.
 
-Currently, two official plugins are available:
+## Features
+- Natural language hotel search
+- User authentication via Clerk
+- Booking management
+- Hotel browsing and filtering
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Setup and Installation
 
-## Expanding the ESLint configuration
+### Prerequisites
+- A Clerk account with a React JS project configured
+- Backend API running (see backend repository)
+- Node.js and npm installed
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Installation Steps
+1. Clone the repository:
+```
+git clone https://github.com/Husnixix/ai-booking-frontend.git
+cd ai-booking-frontend
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+2. Install dependencies:
 ```
+npm install
+```
+
+3. Create a `.env` file in the root directory with the following:
+```
+VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+```
+
+4. Start the development server:
+```
+npm run dev
+```
+
+## Environment Variables
+- `VITE_CLERK_PUBLISHABLE_KEY`: Your Clerk publishable key for authentication
+
+## Third-Party Services
+- **Clerk Authentication**: Sign up and create a project at [https://clerk.com/docs](https://clerk.com/docs)
+
+## API Integration
+This frontend connects to the Le Luxe backend API. Make sure to set up the backend server as well:
+[Le Luxe Backend Repository](https://github.com/Husnixix/ai-booking-backend.git)
