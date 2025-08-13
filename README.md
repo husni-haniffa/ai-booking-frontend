@@ -1,49 +1,29 @@
-# Le Luxe - AI Booking System Frontend
+# Le Luxe
 
-## Overview
-Le Luxe is an AI-powered hotel booking system featuring natural language search capabilities using RAG (Retrieval-Augmented Generation) concepts. Users can search for hotels using natural language queries like "I want hotels in Italy with a rooftop" and get relevant filtered results.
+**Le Luxe** is an AI-driven hotel booking system that uses a Retrieval-Augmented Generation (RAG) approach to enable users to search for hotels using natural language queries, such as "fetch hotels from Australia." It aims to provide a faster, more intuitive, and personalized booking experience.
 
-## Features
-- Natural language hotel search
-- User authentication via Clerk
-- Booking management
-- Hotel browsing and filtering
+### Frontend Setup
 
-## Setup and Installation
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/husni-haniffa/ai-booking-frontend
+   ```
 
-### Prerequisites
-- A Clerk account with a React JS project configured
-- Backend API running (see backend repository)
-- Node.js and npm installed
+2. **Navigate to the project directory**
+   ```bash
+   cd ai-booking-frontend
+   ```
 
-### Installation Steps
-1. Clone the repository:
-```
-git clone https://github.com/Husnixix/ai-booking-frontend.git
-cd ai-booking-frontend
-```
+3. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-2. Install dependencies:
-```
-npm install
-```
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-3. Create a `.env` file in the root directory with the following:
-```
-VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-```
-
-4. Start the development server:
-```
-npm run dev
-```
-
-## Environment Variables
-- `VITE_CLERK_PUBLISHABLE_KEY`: Your Clerk publishable key for authentication
-
-## Third-Party Services
-- **Clerk Authentication**: Sign up and create a project at [https://clerk.com/docs](https://clerk.com/docs)
-
-## API Integration
-This frontend connects to the Le Luxe backend API. Make sure to set up the backend server as well:
-[Le Luxe Backend Repository](https://github.com/Husnixix/ai-booking-backend.git)
+5. **Open in your browser**
+   
+   Visit: [http://localhost:5173](http://localhost:5173)
