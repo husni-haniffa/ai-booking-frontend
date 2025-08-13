@@ -1,6 +1,6 @@
 # Le Luxe
 
-**Le Luxe** is an AI-driven hotel booking system that uses a Retrieval-Augmented Generation (RAG) approach to enable users to search for hotels using natural language queries, such as "fetch hotels from Australia." It aims to provide a faster, more intuitive, and personalized booking experience.
+**Le Luxe** is an AI-driven hotel booking system that uses Retrieval-Augmented Generation (RAG) approach to enable users to search for hotels using natural language queries, such as "fetch hotels from Australia." It aims to provide a faster, more intuitive, and personalized booking experience.
 
 ### Frontend Setup
 
